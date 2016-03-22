@@ -4,7 +4,11 @@ class influxdb::repo::apt {
 
   #downcase operatingsystem
   $_operatingsystem = downcase($::operatingsystem)
-
+  
+  if !defined(Class['apt']) {
+    class { 'apt': }
+  }
+        
   apt::source { 'repos.influxdata.com':
     location    => "https://repos.influxdata.com/${_operatingsystem}",
     release     => $::lsbdistcodename,
